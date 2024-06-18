@@ -87,6 +87,14 @@ function showData() {
                 `
     }
     document.getElementById('tbody').innerHTML = table;
+
+    let btnDelete = document.getElementById('deleteAll');
+    if (Products.length > 0) {
+        btnDelete.innerHTML = `<button onclick="deleteAllProducts()" id="delete">Delete All</button>`
+    }
+    else {
+        btnDelete.innerHTML = '';
+    }
 }
 
 showData();
@@ -97,5 +105,11 @@ function deleteProduct(id){
     Products.splice(id, 1);
     localStorage.products = JSON.stringify(Products);
 
+    showData();
+}
+
+function deleteAllProducts() {
+    localStorage.clear();
+    Products.splice(0);
     showData();
 }
