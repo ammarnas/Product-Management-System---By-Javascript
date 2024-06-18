@@ -24,3 +24,30 @@ function getTotal() {
         total.style.background = '#a00d02';
     }
 }
+
+// Create Products
+let Products;
+if(localStorage.products != null){
+    Products = JSON.parse(localStorage.products);
+} else {
+    Products = [];
+}
+
+submit.onclick = function() {
+
+    let newProduct = {
+        title: title.value,
+        price: price.value,
+        taxes: taxes.value,
+        ads: ads.value,
+        discount: discount.value,
+        total: total.innerHTML,
+        count: count.value,
+        category: category.value
+    }
+
+    Products.push(newProduct);
+    
+    localStorage.setItem('products', JSON.stringify(Products));
+    // console.log(Products);
+}
