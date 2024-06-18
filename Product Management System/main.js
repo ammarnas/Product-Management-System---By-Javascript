@@ -52,6 +52,7 @@ submit.onclick = function() {
     // console.log(Products);
 
     ClearData();
+    showData();
 }
 
 
@@ -66,3 +67,26 @@ function ClearData() {
     count.value = '';
     category.value = '';
 }
+// Show Data
+function showData() {
+    let table = '';
+    for (let i = 0; i < Products.length; i++){
+        table += `
+                    <tr>
+                        <td>${i}</td>
+                        <td>${Products[i].title}</td>
+                        <td>${Products[i].price}</td>
+                        <td>${Products[i].taxes}</td>
+                        <td>${Products[i].ads}</td>
+                        <td>${Products[i].discount}</td>
+                        <td>${Products[i].total}</td>
+                        <td>${Products[i].category}</td>
+                        <td><button id="update">update</button></td>
+                        <td><button id="delete">delete</button></td>
+                    </tr>
+                `
+    }
+    document.getElementById('tbody').innerHTML = table;
+}
+
+showData();
