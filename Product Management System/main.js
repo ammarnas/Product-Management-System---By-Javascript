@@ -47,27 +47,32 @@ submit.onclick = function() {
         count: count.value,
         category: category.value
     }
-
-    if(mode === 'create') {
-        if(newProduct.count > 1){
-            for(let i = 0; i < newProduct.count; i++){
-                Products.push(newProduct);
+    if(title.value != ''
+    && price.value != '' 
+    && category.value != ''
+    && count.value < 100) {
+        if(mode === 'create') {
+            if(newProduct.count > 1){
+                for(let i = 0; i < newProduct.count; i++){
+                    Products.push(newProduct);
+            }
+        } else {
+            Products.push(newProduct);
         }
-    } else {
-        Products.push(newProduct);
+        } else {
+            Products[tempIndex] = newProduct;
+            mode = 'create';
+            submit.innerHTML = 'create';
+            count.style.display = 'block';
+        } 
+        ClearData();
     }
-    } else {
-        Products[tempIndex] = newProduct;
-        mode = 'create';
-        submit.innerHTML = 'create';
-        count.style.display = 'block';
-    } 
+    
     
     
     localStorage.setItem('products', JSON.stringify(Products));
     // console.log(Products);
 
-    ClearData();
     showData();
 }
 
@@ -91,7 +96,7 @@ function showData() {
     for (let i = 0; i < Products.length; i++){
         table += `
                     <tr>
-                        <td>${i}</td>
+                        <td>${i+1}</td>
                         <td>${Products[i].title}</td>
                         <td>${Products[i].price}</td>
                         <td>${Products[i].taxes}</td>
