@@ -82,7 +82,7 @@ function showData() {
                         <td>${Products[i].total}</td>
                         <td>${Products[i].category}</td>
                         <td><button id="update">update</button></td>
-                        <td><button id="delete">delete</button></td>
+                        <td><button onclick="deleteProduct(${i})" id="delete">delete</button></td>
                     </tr>
                 `
     }
@@ -90,3 +90,12 @@ function showData() {
 }
 
 showData();
+
+
+// Delete Product 
+function deleteProduct(id){
+    Products.splice(id, 1);
+    localStorage.products = JSON.stringify(Products);
+
+    showData();
+}
