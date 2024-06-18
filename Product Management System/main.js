@@ -8,6 +8,8 @@ let count = document.getElementById('count');
 let category = document.getElementById('category');
 let submit = document.getElementById('submit');
 
+let mode = 'create';
+let tempIndex;
 // console.log(title, price, taxes, ads, discount, total, count, category, submit);
 
 
@@ -46,13 +48,21 @@ submit.onclick = function() {
         category: category.value
     }
 
-    if(newProduct.count > 1){
-        for(let i = 0; i < newProduct.count; i++){
-            Products.push(newProduct);
+    if(mode === 'create') {
+        if(newProduct.count > 1){
+            for(let i = 0; i < newProduct.count; i++){
+                Products.push(newProduct);
+        }
+    } else {
+        Products.push(newProduct);
     }
-} else {
-    Products.push(newProduct);
-}
+    } else {
+        Products[tempIndex] = newProduct;
+        mode = 'create';
+        submit.innerHTML = 'create';
+        count.style.display = 'block';
+    } 
+    
     
     localStorage.setItem('products', JSON.stringify(Products));
     // console.log(Products);
@@ -75,6 +85,8 @@ function ClearData() {
 }
 // Show Data
 function showData() {
+    getTotal();
+    
     let table = '';
     for (let i = 0; i < Products.length; i++){
         table += `
@@ -87,7 +99,7 @@ function showData() {
                         <td>${Products[i].discount}</td>
                         <td>${Products[i].total}</td>
                         <td>${Products[i].category}</td>
-                        <td><button id="update">update</button></td>
+                        <td><button onclick="updateProduct(${i})" id="update">update</button></td>
                         <td><button onclick="deleteProduct(${i})" id="delete">delete</button></td>
                     </tr>
                 `
@@ -107,8 +119,8 @@ showData();
 
 
 // Delete Product 
-function deleteProduct(id){
-    Products.splice(id, 1);
+function deleteProduct(index){
+    Products.splice(index, 1);
     localStorage.products = JSON.stringify(Products);
 
     showData();
@@ -120,3 +132,26 @@ function deleteAllProducts() {
     showData();
 }
 
+function updateProduct(index) {
+    title.value = Products[index].title;
+    price.value = Products[index].price;
+    taxes.value = Products[index].taxes;
+    ads.value = Products[index].ads;
+    discount.value = Products[index].discount;
+    category.value = Products[index].category;
+
+    getTotal();
+
+    count.style.display = 'none';
+
+    submit.innerHTML = 'Update';
+
+    mode = 'update';
+
+    tempIndex = index;
+
+    scroll({
+        top:0,
+        behavior: 'smooth'
+    })
+}
