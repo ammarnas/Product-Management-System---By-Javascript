@@ -50,4 +50,19 @@ submit.onclick = function() {
     
     localStorage.setItem('products', JSON.stringify(Products));
     // console.log(Products);
+
+    ClearData();
+}
+
+
+// Clear Inputs 
+function ClearData() {
+    title.value = '';
+    price.value = '';
+    taxes.value = '';
+    ads.value = '';
+    discount.value = '';
+    total.innerHTML = '';
+    count.value = '';
+    category.value = '';
 }
